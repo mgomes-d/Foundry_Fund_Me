@@ -258,6 +258,64 @@ So, then you have two options:
 
 1. Download from NPM and you have dependencies foreign to foundry
 2. Download from the chainlink-brownie-contracts repo wich already downloads from npm and then packages it nicely for you to use in foundry.
+
+## Configuring the priceFeed
+Each chain have their own address of the price of the contract (like ETH/USD),  so we can check the chainId of the block.
+We can also do our own local pricefeed using MockV3Aggregator.
+
+## Magic Number
+
+Magic Number is using a number without naming it. Like passing a number directly to a function.
+Tranform this
+```solidity
+MockV3Aggregator(8, 2000e8);
+```
+to this
+```solidity
+uint8 public constant DECIMALS = 8;
+int256 public constant INITIAL_PRICE = 2000e8;
+MockV3Aggregator(DECIMALS, INITIAL_PRICE);
+```
+
+## Cheatcodes
+
+```
+prank(address);
+```
+This is a way to make the tests in foundry, where you can specify which address are sending the contract.
+```
+makeAddr(string memory name) internal returns(address addr);
+```
+This gonna make a new user returning their address.
+ ```
+ deal(address who, uint256 newBalance);
+ ```
+ Set a balance of the address o the newBalance;
+
+For more information about the functions or finding others functions [here](https://book.getfoundry.sh/).
+
+## Calculing the gas costs
+In anvil, the default gas price is set to 0, so we neet to set it using this function.
+```
+function txGasPrice(uint256) external;
+```
+
+Now we have a function in solidity that calcul the gas left.
+```
+gasleft()
+```
+So we calcul the gas before and after the function that you want to calcul the gas.
+
+## Storage optimization
+
+The gas that you use accessing a storage(global) is a lot higher than accessing a local variables.
+
+So every time we need to access a storage variable multiple time, we gonna put the value one time inside a local variable, so we can use the local variable.
+
+## Foundry devops
+[link](https://github.com/Cyfrin/foundry-devops)
+
+
 ## Summary
 1. That is an official repo maintained by the same org
 2. It downloads from the official release cycle `chainlink/contracts` use (npm) and packages it nicely for digestion from foundry.
