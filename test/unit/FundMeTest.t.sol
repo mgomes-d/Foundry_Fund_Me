@@ -18,7 +18,7 @@ contract FundMeTest is Test{
         vm.deal(USER, STARTING_BALANCE);
     }
 
-    function testMinimumDollarIsFive() public {
+    function testMinimumDollarIsFive() public view {
         assertEq(fundMe.MINIMUM_USD(), 5e18);
     }
 
@@ -26,7 +26,7 @@ contract FundMeTest is Test{
     //     assertEq(fundMe.i_owner(), address(this));
     // }
 
-    function testPriceFeedVersionIsAccurate() public {
+    function testPriceFeedVersionIsAccurate() public view {
         uint256 version = fundMe.getVersion();
         assertEq(version, 4);
     }
