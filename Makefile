@@ -16,5 +16,9 @@ test:
 	@forge test
 snapshot:
 	@forge snapshot
+anvil:
+	anvil --steps-tracing
+deploy:
+	@forge script script/DeployFundMe.s.sol:DeployFundMe --private-key ${DEFAULT_ANVIL_KEY} --broadcast
 
-.PHONY: install clean remove update build test snapshot
+.PHONY: install clean remove update build test snapshot deploy anvil
